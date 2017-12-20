@@ -1,0 +1,67 @@
+<div class="container">
+	<table class="table table-default">
+		<thead>
+			<tr>
+				<th>게시판 글</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>글번호</td>
+				<td><%=@post.id%></td>
+				<td>작성자</td>
+				<td><%=@post.username%></td>
+				<td>작성일자</td>
+				<td><%=@post.created_at%></td>								
+			</tr>
+			<tr>
+				<td>글제목</td>
+				<td><%=@post.title%></td>
+			</tr>
+			<tr>
+				<td >글 내용</td>
+				<td><%=@post.content%></td>
+			</tr>
+		</tbody>
+	</table>
+	<a href="/" class="btn btn-default">글 목록</a>
+	<a href="/post/edit/<%=@post.id%>" class="btn btn-default">글 수정</a>
+	<a href="/post/destroy/<%=@post.id%>" class="btn btn-default">글 삭제</a>
+
+	
+	<div class="container" style="margin-top: 20px"
+		<div class="container">
+			<h4>댓글</h4>
+			<div class="container"><%= @post.comments.length %>개<!-- 댓글 총갯수 표현 --></div>
+			<div class="container" style="margin-top: 10px">
+				<ul>
+					<% @post.comments.each do |c| %>		
+					
+					<li style="margin-top: 10px">						
+						<div><%=c.created_at%><!-- 작성자명,시간등 --></div>
+						<% if c.id == @comments.id %>					
+						<form action="/post/comment_update/<%=@comments.id%>">
+							<input class="form-control" type="input" name="content" maxlength="1024" style="height: 100px" value="<%=@comments.content%>">						
+							<input class="btn btn-default" type="submit" value="작성" style="margin-top: 10px">						
+						</form>
+						<% else %>
+						<div><%=c.content%></div>
+						<% end %>
+					</li>					
+					<%end %>					
+				</ul>
+			</div>
+		</div>
+
+		<div class="container" style="margin-top: 20px">		
+				<form action="/post/comment_add">  
+					<div class="container">
+						<input class="form-control" type="input" name="content" maxlength="1024" style="height: 100px">
+						<input type="hidden" name="id" value="<%=@post.id%>">
+						<input class="btn btn-default" type="submit" value="작성" style="margin-top: 10px">
+					</div>
+				</form>
+		</div>
+	</div>	
+</div>
+

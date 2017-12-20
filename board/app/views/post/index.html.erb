@@ -1,0 +1,25 @@
+<div class="container">
+	<table  class="table table-default">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>글쓴이</th>
+				<th>작성일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @posts.each do |p| %>
+				<tr>
+					<td><%=p.id%></td>
+					<td><a href="/post/show/<%=p.id%>"><%=p.title%>[<%=p.comments.length%>]</a></td>
+					<td><%=p.username%></td>
+					<td><%=p.created_at%></a></td>				
+				</tr>
+			<%end %>
+		</tbody>
+	</table>
+	<form action="/post/new">
+		<input type="submit" value="글쓰기" class="btn btn-default">		
+	</form>
+</div>

@@ -1,0 +1,22 @@
+<div class="container">
+	<form action="/post/update/<%=@post.id%>">
+		<table class="table table-default">
+				<thead>
+					<tr>
+						<th colspan="2" text-align="center"><h2>게시글 수정</h2></th>		
+					</tr>
+				</thead>
+				<tbody>		
+					<tr>
+						<td><input class="form-control" type="input" name="title" placeholder="제목" maxlength="50" value="<%=@post.id%>"></td>
+						<td><input class="form-control" type="input" name="username" placeholder="닉네임" value="<%=@post.username%>"> </td>
+					</tr>						
+					<tr>
+						<td colspan="2"><textarea class="form-control" name="content" placeholder="글내용" maxlength="2048" style="height: 350px"><%=@post.content %></textarea></td>
+					</tr>		
+				</tbody>
+			</table>	
+			<input type="submit" value="전송" class="btn btn-default">
+			<a href="/" class="btn btn-default">이전으로</a>
+		</form>		
+</div>
