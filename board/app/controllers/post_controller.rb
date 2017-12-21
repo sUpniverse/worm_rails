@@ -1,4 +1,6 @@
 class PostController < ApplicationController
+  before_action :authorize, only: [:new]
+
   def index
   	@posts = Post.all.reverse
   end

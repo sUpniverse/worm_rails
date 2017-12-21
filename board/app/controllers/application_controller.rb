@@ -11,5 +11,10 @@ class ApplicationController < ActionController::Base
   	end
   end
 
+  def authorize
+    flash[:alert] = "로그인을 하고 글을 쓰세요~"
+    redirect_to '/' if current_user.nil?
+  end
+
   	helper_method :current_user
 end
