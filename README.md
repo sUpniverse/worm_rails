@@ -30,8 +30,10 @@ rails g(generate) model post
 #### 4. Rails db 마이그레이션 
 
 ```
-rails db:migration
+rails db:migrate
 ```
+
+- Ex) **db:migrate**, **db:create**, **db:drop**,  **db:setup**,  **db:reset** 
 
 #### 5. Rails Comment 만들기
 
