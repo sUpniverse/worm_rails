@@ -10,7 +10,7 @@
 				<td>글번호</td>
 				<td><%=@post.id%></td>
 				<td>작성자</td>
-				<td><%=@post.username%></td>
+				<td><%=@post.user.username%></td>
 				<td>작성일자</td>
 				<td><%=@post.created_at%></td>								
 			</tr>
@@ -39,9 +39,9 @@
 					
 					<li style="margin-top: 10px">						
 						<div><%=c.created_at%><!-- 작성자명,시간등 --></div>
-						<% if c.id == @comments.id %>					
-						<form action="/post/comment_update/<%=@comments.id%>">
-							<input class="form-control" type="input" name="content" maxlength="1024" style="height: 100px" value="<%=@comments.content%>">						
+						<% if c.id == @comment.id %>					
+						<form action="/post/comment_update/<%=@comment.id%>">
+							<input class="form-control" type="input" name="content" maxlength="1024" style="height: 100px" value="<%=@comment.content%>">						
 							<input class="btn btn-default" type="submit" value="작성" style="margin-top: 10px">						
 						</form>
 						<% else %>

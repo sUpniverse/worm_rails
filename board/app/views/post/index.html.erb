@@ -13,13 +13,16 @@
 				<tr>
 					<td><%=p.id%></td>
 					<td><a href="/post/show/<%=p.id%>"><%=p.title%>[<%=p.comments.length%>]</a></td>
-					<td><%=p.username%></td>
+					<td><%=p.user.username%></td>
 					<td><%=p.created_at%></a></td>				
 				</tr>
 			<%end %>
 		</tbody>
 	</table>
-	<form action="/post/new">
-		<input type="submit" value="글쓰기" class="btn btn-default">		
-	</form>
+	<% unless session[:user_id].nil? %>
+		<form action="/post/new">
+			<input type="submit" value="글쓰기" class="btn btn-default">		
+		</form>
+	<% else %>
+	<% end %>
 </div>

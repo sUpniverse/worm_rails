@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   get 'post/destroy/:id' => 'post#destroy'
 
-  get 'post/edit/:id' =>'post#edit'
+  get 'post/edit/:id' => 'post#edit'
 
   get 'post/update/:id' => 'post#update'
 
@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   get 'post/comment_edit/:id' => 'post#comment_edit'
   get 'post/comment_update/:id' => 'post#comment_update'
   get 'post/comment_destroy/:id' => 'post#comment_destroy'
+
+  get  'user/new' => 'user#new'
+  post 'user/create' => 'user#create'
+  post 'user/login_process' =>'user#login_process'
+  get  'user/logout' => 'user#logout'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

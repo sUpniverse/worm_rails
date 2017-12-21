@@ -8,7 +8,7 @@ class PostController < ApplicationController
   end
 
   def create
-  	Post.create(username: params[:username],
+  	Post.create(user_id: session[:user_id],
   				title: params[:title],
   				content: params[:content])
 
@@ -39,25 +39,26 @@ class PostController < ApplicationController
 
   def comment_add
     Comment.create(content: params[:content],
+                   user_id: session[:user_id],
                    post_id: params[:id])
     redirect_to :back
   end
 
   def comment_edit
-    @comments = Comment.find(params[:id])
-    @post = @comments.post
+    @comment = Comment.find(params[:id])
+    @post = @comment.post
   end
 
   def comment_update
-    @comments = Comment.find(params[:id])    
-    @comments.update(content: params[:content])
-    @post = @comments.post
+    @comment = Comment.find(params[:id])    
+    @comment.update(content: params[:content])
+    @post = @comment.post
 
     redirect_to "/post/show/#{@post.id}"
   end
 
   def comment_destroy
-    @comments = Comment.find(params[:id]).destroy    
+    @comment = Comment.find(params[:id]).destroy    
     
     redirect_to :back
   end
