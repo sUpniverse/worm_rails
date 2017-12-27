@@ -20,6 +20,24 @@ Rails.application.routes.draw do
   #destroy
   delete '/boards/:id' => 'boards#destroy'
 
+
+  # Sign in
+  get '/signin' => 'session#signin'
+  post '/signin' => 'session#user_signin'
+
+
+  # Sign out
+  delete '/signout' => 'session#signout'
+
+  # Sign up
+  get '/signup' => 'session#signup'
+  post '/signup' => 'session#user_signup'
+
+
+
+
+
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
