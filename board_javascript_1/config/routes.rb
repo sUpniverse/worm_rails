@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get '/signin' => 'session#signin'
   post '/signin' => 'session#user_signin'
 
+  post 'boards/:id/like' => 'boards#like_board'
 
   # Sign out
   delete '/signout' => 'session#signout'
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
   get '/signup' => 'session#signup'
   post '/signup' => 'session#user_signup'
 
+  post '/boards/:id/create_comment' =>'boards#create_comment'  
 
 
 
