@@ -109,3 +109,15 @@ rails db:migrate
   - flash[:alert]는 팝업처럼 띄워주는 기능이다. 나중에 알아보면됨! [flash](http://api.rubyonrails.org/classes/ActionDispatch/Flash.html)
 
 - logout은 별거 없다 session.clear만 해주면 끝!
+
+#### Restful
+
+- POST, GET 이외에 다른 method가 있음
+
+| METHOD | 역할                                       |
+| :----: | ---------------------------------------- |
+|  POST  | POST를 통해 해당 URI를 요청하면 리소스를 생성합니다.        |
+|  GET   | GET를 통해 해당 리소스를 조회합니다. 리소스를 조회하고 해당 도큐먼트에 대한 자세한 정보를 가져온다. |
+|  PUT   | PUT를 통해 해당 리소스를 수정합니다.                   |
+| DELETE | DELETE를 통해 리소스를 삭제합니다.                   |
+
