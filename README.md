@@ -3,13 +3,13 @@
 #### 1. Rails 프로젝트 생성
 
 ```
-rails new post
-cd post 
+$ rails new post
+$ cd post 
 ```
 #### 2 . Rails 컨트롤러 생성
 
 ```
-rails g(ganerate) controller post index create new
+$ rails g(ganerate) controller post index create new
 ```
 - 컨트롤러에 create new에 해당하는 def안에 controller로의 역할을 부여해줌
 
@@ -22,7 +22,7 @@ rails g(ganerate) controller post index create new
 #### 3. Rails 모델 생성
 
 ```
-rails g(generate) model post
+$ rails g(generate) model post
 ```
 
 - 모델 생성 후 db의 각 요소들 변경 (username,title,content)
@@ -30,7 +30,7 @@ rails g(generate) model post
 #### 4. Rails db 마이그레이션 
 
 ```
-rails db:migrate
+$ rails db:migrate
 ```
 
 - Ex) **db:migrate**, **db:create**, **db:drop**,  **db:setup**,  **db:reset** 
