@@ -36,8 +36,11 @@ Rails.application.routes.draw do
 
   post '/boards/:id/create_comment' =>'boards#create_comment'  
 
+  delete '/boards/:id/comments/:comment_id' => 'boards#destroy_comment'
 
+  post 'boards/:id/comments/:id/like' => 'boards#like_comment'
 
+  put 'boards/:id/comments/:comment_id' => 'boards#update_comment'
 
 
   # Example of regular route:

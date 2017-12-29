@@ -1,3 +1,22 @@
-console.log("오호호 댓글을 달았구만")
-$('.comment-list').prepend('<tr><td><%= @comment.contents %></td></tr>')
+$('.comment-list').prepend(
+	`<div id="comment-<%= @comment.id%>" class="media">                	                	
+        <img class="mr-3" src="#">                                                            
+        	<div class="media-body">               	                         
+        		<h5 class="mt-0">username</h5>
+        		<%= @comment.contents %>                      
+        		<p> 
+               	<% if @comment.likes.nil?%>
+                   	<i data-id="<%= @comment.id%>" type="button" class="btn btn-outline-primary btn-sm comment-like">좋아요</i>(<span id="like-count">0</span>)
+               	<% else %>
+                   	<i data-id="<%= @comment.id%>" type="button" class="btn btn-outline-primary btn-sm comment-like">좋아요(<span id="like-count"><%= @comment.likes.count %></span>)</i>
+               	<% end %>                      	
+               	<button data-id="<%=@comment.id %>" type="button" class="btn btn-outline-warning btn-sm comment-edit">수정</button>
+               	<button data-id="<%=@comment.id %>" type="button" class="btn btn-outline-danger btn-sm comment-delete">삭제</button>                      	
+                </p>
+            </div>
+        <a class="mr-1"><small><%= @comment.created_at.to_formatted_s(:db)%></small></a>                    
+    </div>`
+	);
 $('#comment').val('');
+
+$('')

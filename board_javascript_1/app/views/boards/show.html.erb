@@ -4,17 +4,27 @@
 			<th colspan="2"><%=@board.id%>번 글</th>
 		</tr>
 		<tbody>
-			<tr><td>제목</td><td><%=@board.title%></td></tr>
+			<tr>
+				<td>제목</td>
+				<td><%=@board.title%></td>
+				<td><small><%=@board.created_at.to_formatted_s(:db)%></small></td>
+			</tr>
 
 			<tr><td>내용</td><td><%=@board.contents%></td></tr>
 		</tbody>		
 	</table>
 		<a href="/" class="btn btn-primary">글 목록</a>
+		<% if @like.count > 0 %>
 		<button type="button" class="btn btn-info" id="like">
 			<i class="fas fa-thumbs-up fa-lg"></i>좋아요(<span id="like-count">0</span>)
 		</button>
+		<% else %>
+			<button type="button" class="btn btn-info" id="like">
+ 			<i class="fas fa-thumbs-up fa-lg"></i>좋아요(<span id="like-count"><%= @board.likes.count %></span>)
+			</button>
+		<% end %>
 		<a href="/boards/<%=@board.id%>/edit" class="btn btn-warning">수정</a>
-		<a href="/boards/<%=@board.id%>" data-method="delete" class="btn btn-secondary" >삭제</a>
+		<a href="/boards/<%=@board.id%>" data-method="delete" class="btn btn-danger" >삭제</a>
 </div>
 
 <div class="container mt-5" >
@@ -25,21 +35,26 @@
 	         </div>
 			<form id="comment-form">
 				<input type="text" class="form-control" id="comment">
-				<button type="submit" class="btn btn-danger create-comment mt-2">댓글달기</button>
+				<button type="submit" class="btn btn-secondary create-comment mt-2">댓글달기</button>
 			</form>			
-			<div class="comments-list" style="margin-top: 3rem">
+			<div class="comment-list" style="margin-top: 3rem">
 				<% @board.comments.each do |comment| %>
-            	<div class="media">                	
-                	<a class="media-left" href="#">
-                      <img class="align-self-center mr-3" src="#">
-                    </a>
-
-                	<div class="media-body"> 
-                	  <p class="pr-1"><small><%=comment.created_at%></small></p>                       
+            	<div id="comment-<%=comment.id%>" class="media">                	                	
+                	<img class="mr-3" src="#">                                                            
+                	<div class="media-body">               	                         
                       <h5 class="mt-0">username</h5>
-                     <%= comment.contents %>                      
-                      <p><small><a href="">수정</a> - <a href="">삭제</a> - <a href="">좋아요</a></small></p>
+                      <div class="comment-contents"><%= comment.contents %> </div>                    
+                      <p> 
+                      	<% if comment.likes.nil?%>
+                      	<button data-id="<%= comment.id%>" type="button" class="btn btn-outline-primary btn-sm comment-like" ><i>좋아요</i>(<span id="comment-like-count">0</span>)</button>                      	
+                      	<% else %>
+                      	<button data-id="<%= comment.id%>" type="button" class="btn btn-outline-primary btn-sm comment-like"><i>좋아요</i>(<span id="comment-like-count"><%= comment.likes.count %></span>)</button>                    	
+                      	<% end %>                   	
+                      	<button  data-id="<%= comment.id%>" type="button" class="btn btn-outline-warning btn-sm comment-edit">수정</button>
+                      	<button  data-id="<%=comment.id %>" type="button" class="btn btn-outline-danger btn-sm comment-delete">삭제</button>                      	
+                      </p>
                     </div>
+                    <a class="mr-1"><small><%=comment.created_at.to_formatted_s(:db)%></small></a>                    
                 </div>
                 <%end%>
             </div>
@@ -61,17 +76,13 @@
 			} else {
 				$('#like-count').text(parseInt($('#like-count').html())-1);
 			}
-			$(this).toggleClass('btn-danger').toggleClass('btn-info');
+			$(this).toggleClass('btn-success').toggleClass('btn-info');
 		});
 	})
 
 	$('#comment-form').on('submit', function(event) {
 		event.preventDefault();
-		console.log("댓글달기 버튼 눌림");
-
-		var c = $('#comment').val();
-		console.log(c)
-
+		var c = $('#comment').val();		
 		$.ajax({
 			url: "/boards/<%=@board.id%>/create_comment",
 			method: 'POST',
@@ -81,4 +92,72 @@
 		});
 	})
 
+	$(function(){
+		$('.comment-like').on('click',function(){
+			var id = $(this).data('id');
+			console.log("버튼 눌림");
+			$.ajax({
+				url: `/boards/<%=@board.id%>/comments/${id}/like`,
+				method: 'POST'
+			});
+			console.log(this)
+			if(this.classList.contains('#comment-like-count')) {
+				$('#comment-like-count').text(parseInt($('#comment-like-count').html())+1);
+			} else {
+				$('#comment-like-count').text(parseInt($('#comment-like-count').html())-1);
+			}
+			$(this).toggleClass('btn-outline-primary btn-sm').toggleClass('btn-primary btn-sm');	
+		});
+	})
+
+
+	$(document).on('click','.comment-delete',function(){
+		var id = $(this).data('id');
+		if(confirm("이 댓글 삭제 할꺼니?")) {
+			$.ajax({
+				url:`/boards/<%=@board.id%>/comments/${id}`,
+				method:'delete' ,
+			})	
+		}				
+	})
+
+	$(document).on('click','.comment-edit',function(){
+		var id = $(this).data('id');
+		var comment = $($(this).parent().siblings()[1]);
+		var q = comment[0].textContent; 
+
+		// var td = $(this).parents('.comment-list').children();		
+		// td.each(function(){
+		// 	$(this).find('.comment-edit').hide();
+		// })
+
+		
+		comment.replaceWith(`<div mb-1><input type="text" value="${q}" class="form-control edit-comment-form"/></div>`);	
+		$(this).replaceWith(`<button data-id="${id}" type="button" class="btn btn-outline-warning btn-sm comment-update">완료</button>`);
+		$('.comment-edit').hide();
+	})
+
+	$(document).on('click','.comment-update',function(){
+		var q = $('.edit-comment-form').val();
+		var id = $(this).data('id');
+		$($(this).parent().siblings()[1]).replaceWith(`<div class="comment-contents">${q}</div>`);
+		$(this).replaceWith(`<button data-id="${id}" type="button" class="btn btn-outline-warning btn-sm comment-edit">수정</button>`);
+		$('.comment-edit').show();
+		// console.log(td);		
+		// td.each(function(){
+		// 	console.log($(this));
+		// 	$(this).show();
+		// })
+
+
+		$.ajax({
+			url: `/boards/<%= @board.id%>/comments/${id}` ,
+			method: 'PUT',
+			data: {
+				contents: q
+			}		
+		})
+
+		
+	})
 </script>

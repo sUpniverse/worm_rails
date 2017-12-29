@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20171228060537) do
   create_table "likes", force: :cascade do |t|
     t.integer  "board_id"
     t.integer  "user_id"
+    t.integer  "comment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
