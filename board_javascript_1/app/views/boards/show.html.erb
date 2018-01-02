@@ -40,7 +40,7 @@
 			<div class="comment-list" style="margin-top: 3rem">
 				<% @board.comments.each do |comment| %>
             	<div id="comment-<%=comment.id%>" class="media">                	                	
-                	<img class="mr-3" src="#">                                                            
+                	<img class="mr-3" src="<%=user.userimage%>">                                                            
                 	<div class="media-body">               	                         
                       <h5 class="mt-0">username</h5>
                       <div class="comment-contents"><%= comment.contents %> </div>                    

@@ -3,4 +3,5 @@ class User < ActiveRecord::Base
 	has_many :boards
 	has_many :likes
 	has_many :comments
+	mount_uploader :avatar, AvatarUploader
 end

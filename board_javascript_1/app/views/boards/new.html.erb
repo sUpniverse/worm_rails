@@ -1,5 +1,5 @@
-<form action="/boards" method="POST">
-	<input type="hidden" name="authenticity_token" value="<% form_authenticity_token %>">
+<form action="/boards" method="POST" >	
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 	제목<br><input type="text" name="title" class="form-control">
 	내용<br><input type="text" name="contents" class="form-control">
 	<input type="submit" value="작성하기" class="btn btn-success">
